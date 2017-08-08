@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from colorama import Fore, Back, Style
+import os
 from mpl_toolkits.mplot3d import axes3d
-
 """
 Sympy Symbol definitions
 """
@@ -36,29 +36,29 @@ def get_inputs():
     while function_loop is False:
         try:
             function_loop = True
-            function = input('What is the function in terms of x and y? ')
+            function = input(Fore.LIGHTCYAN_EX+'What is the function in terms of x and y? '+Fore.LIGHTGREEN_EX)
         except NameError:
             function_loop = False
-            print 'The function must be in terms of x and y.'
+            print Fore.LIGHTRED_EX+'The function must be in terms of x and y.'+Fore.LIGHTCYAN_EX
         except SyntaxError:
             function_loop = False
-            print "Syntax Error: please re-enter the function using the proper format."
+            print Fore.LIGHTRED_EX+"Syntax Error: please re-enter the function using the proper format."+Fore.LIGHTCYAN_EX
     bounds_loop = False
     while bounds_loop is False:
         try:
             bounds_loop = True
             bounds = [float(element) for element in
-                      raw_input('What are the bounds of the function, <min_x,max_x,min_y,max_y,min_z,max_z>? ').split(
+                      raw_input(Fore.LIGHTCYAN_EX+'What are the bounds of the function, <min_x,max_x,min_y,max_y,min_z,max_z>? '+Fore.LIGHTGREEN_EX).split(
                           ',')]
             if len(bounds) != 6:
                 raise SyntaxError()
             else:
                 pass
         except ValueError:
-            print 'Must be float valued inputs.'
+            print Fore.LIGHTRED_EX+'Must be float valued inputs.'+Fore.LIGHTCYAN_EX
             bounds_loop = False
         except SyntaxError:
-            print 'Length of bounds must be = to 6.'
+            print Fore.LIGHTRED_EX+'Length of bounds must be = to 6.'+Fore.LIGHTCYAN_EX
             bounds_loop = False
     return [function, bounds]
 
@@ -74,8 +74,8 @@ def main(function, bounds):
     Print the data for the original function
     """
     functional_gradient = gradient(function)
-    print 'The partial derivative of %s with respect to x is %s.' % (str(function), str(functional_gradient[0][0]))
-    print 'The partial derivative of %s with respect to y is %s.' % (str(function), str(functional_gradient[0][1]))
+    print Fore.LIGHTCYAN_EX+'The partial derivative of '+Fore.MAGENTA+('%s' % (str(function)))+Fore.LIGHTCYAN_EX+' with respect to x is '+Fore.MAGENTA+('%s.' % str(functional_gradient[0][0]))+Fore.LIGHTCYAN_EX
+    print Fore.LIGHTCYAN_EX+'The partial derivative of '+Fore.MAGENTA+('%s' % (str(function)))+Fore.LIGHTCYAN_EX+' with respect to y is '+Fore.MAGENTA+('%s.' % str(functional_gradient[0][1]))+Fore.LIGHTCYAN_EX
     """
     Create the meshgrid
     """
@@ -181,19 +181,21 @@ def main(function, bounds):
 
 operation_loop = False
 while operation_loop is False:
+    os.system('cls')
+    print Fore.LIGHTCYAN_EX+"Booting MVC.py by BooleanDesigns"
     inputs = get_inputs()
     main(inputs[0], inputs[1])
     exit_loop = False
     while exit_loop is False:
         try:
             exit_loop = True
-            exit_data = raw_input('Would you like to exit the program <y/n>? ')
+            exit_data = raw_input(Fore.LIGHTCYAN_EX+'Would you like to exit the program <y/n>? '+Fore.LIGHTRED_EX)
             if exit_data != 'y' and exit_data != 'n':
-                raise ValueError('Input is Invalid.')
+                raise ValueError(Fore.LIGHTRED_EX+'Input is Invalid.')
             elif exit_data == 'y':
                 exit()
             else:
                 pass
         except ValueError:
-            print "The input must be either <y/n>."
+            print Fore.LIGHTRED_EX+"The input must be either <y/n>."
             exit_loop = False
